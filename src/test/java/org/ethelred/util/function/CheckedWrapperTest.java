@@ -1,10 +1,11 @@
 package org.ethelred.util.function;
 
+import static org.testng.Assert.*;
+
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class CheckedWrapperTest {
 
