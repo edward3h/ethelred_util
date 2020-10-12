@@ -11,6 +11,8 @@ plugins {
     id 'java-library'
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'maven'
+    id 'groovy'
+    id 'org.unbroken-dome.test-sets' version '3.0.1'
 }
 
 group = 'org.ethelred'
@@ -21,23 +23,38 @@ repositories {
     jcenter()
 }
 
+testSets {
+    ngTest
+    spockTest
+}
+
 dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.4'
 
     // Use TestNG framework, also requires calling test.useTestNG() below
-    testImplementation 'org.testng:testng:7.2.0'
+    ngTestImplementation 'org.testng:testng:7.2.0'
 
     // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
 
-    testImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
+    ngTestImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
+
+    spockTestImplementation 'org.spockframework:spock-core:2.0-M3-groovy-3.0'
 }
 
-test {
+ngTest {
     // Use TestNG for unit tests
     useTestNG()
 }
+
+spockTest {
+    useJUnitPlatform()
+}
+
+check.dependsOn(ngTest)
+check.dependsOn(spockTest)
 
 task installGitHooks(type:Exec) {
     commandLine "hooks/setup.sh"
