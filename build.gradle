@@ -18,9 +18,7 @@ plugins {
 group = 'org.ethelred'
 
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 testSets {
@@ -31,17 +29,17 @@ testSets {
 dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:29.0-jre'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.4'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.8'
 
     // Use TestNG framework, also requires calling test.useTestNG() below
-    ngTestImplementation 'org.testng:testng:7.2.0'
+    ngTestImplementation 'org.testng:testng:7.5'
 
     // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
 
     ngTestImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
 
-    spockTestImplementation 'org.spockframework:spock-core:2.0-M3-groovy-3.0'
+    spockTestImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
 }
 
 ngTest {
