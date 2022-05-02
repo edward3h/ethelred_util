@@ -29,7 +29,7 @@ dependencies {
 
     ngTestImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
 
-    spockTestImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    spockTestImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
 }
 
 ngTest {
@@ -50,12 +50,12 @@ task installGitHooks(type:Exec) {
 compileJava.dependsOn installGitHooks
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
