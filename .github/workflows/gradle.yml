@@ -31,4 +31,4 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
         restore-keys: ${{ runner.os }}-gradle
     - name: test with Gradle
-      run: ./gradlew -Pskip.hooks=true verifyGoogleJavaFormat test
+      run: ./gradlew -Pskiphooks=true verifyGoogleJavaFormat test
