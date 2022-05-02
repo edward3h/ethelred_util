@@ -45,6 +45,7 @@ check.dependsOn(ngTest)
 check.dependsOn(spockTest)
 
 task installGitHooks(type:Exec) {
+    onlyIf { !project.hasProperty("skip.hooks")}
     commandLine "hooks/setup.sh"
 }
 compileJava.dependsOn installGitHooks
