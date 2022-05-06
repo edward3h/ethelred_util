@@ -3,9 +3,14 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'groovy'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
+    id 'maven-publish'
+    id 'signing'
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+
 }
 
 group = 'org.ethelred'
+version = '0.1'
 
 repositories {
     mavenCentral()
@@ -32,6 +37,12 @@ dependencies {
     spockTestImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
 }
 
+javadoc {
+	if(JavaVersion.current().isJava9Compatible()) {
+		options.addBooleanOption('html5', true)
+	}
+}
+
 ngTest {
     // Use TestNG for unit tests
     useTestNG()
@@ -50,17 +61,54 @@ task installGitHooks(type:Exec) {
 }
 compileJava.dependsOn installGitHooks
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
+java {
+	withJavadocJar()
+	withSourcesJar()
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+
+            pom {
+				name = 'Ethelred Util'
+				description = 'Utility classes'
+				url = 'https://github.com/edward3h/ethelred_util'
+				licenses {
+					license {
+						name = 'GNU General Public License, Version 3'
+						url = 'https://choosealicense.com/licenses/gpl-3.0/'
+					}
+				}
+				developers {
+					developer {
+						name = 'Edward Harman'
+						email = 'jaq@ethelred.org'
+					}
+				}
+				scm {
+					connection = "https://github.com/edward3h/ethelred_util.git"
+					developerConnection = "git@github.com:edward3h/ethelred_util.git"
+					url = "https://github.com/edward3h/ethelred_util"
+				}
+			}
+        }
+    }
 }
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+signing {
+	def signingKey = findProperty("signingKey")
+	def signingPassword = findProperty("signingPassword")
+	useInMemoryPgpKeys(signingKey, signingPassword)
+	sign publishing.publications.maven
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {  //only for users registered in Sonatype after 24 Feb 2021
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
 }
