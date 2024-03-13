@@ -24,7 +24,7 @@ testSets {
 dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.21'
 
     // Use TestNG framework, also requires calling test.useTestNG() below
     ngTestImplementation 'org.testng:testng:7.5'
