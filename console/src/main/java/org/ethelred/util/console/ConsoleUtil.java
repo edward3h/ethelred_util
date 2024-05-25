@@ -1,4 +1,4 @@
-package org.ethelred.util.console;
+package console;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;

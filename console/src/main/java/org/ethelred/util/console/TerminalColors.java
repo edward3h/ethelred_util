@@ -1,4 +1,4 @@
-package org.ethelred.util.console;
+package console;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Nullable;
 
 /**
  * Helper class for printing colored output on terminals that support it.

@@ -1,4 +1,4 @@
-package org.ethelred.util.console;
+package console;
 
 import java.io.IOException;
 import java.util.Arrays;
