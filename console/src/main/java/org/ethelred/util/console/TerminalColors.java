@@ -1,4 +1,6 @@
-package console;
+package org.ethelred.util.console;
+
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,15 +1,19 @@
 package org.ethelred.util.collect;
 
-import com.google.common.collect.ImmutableMap;
+import org.jspecify.annotations.NullMarked;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /** Created by edward on 3/14/17. */
 @SuppressWarnings("unchecked")
+@NullMarked
 public class ImmutableTypedObjectMap implements TypedObjectMap {
-  private final ImmutableMap<TypedObjectKey<?>, Object> map;
+  private final Map<TypedObjectKey<?>, Object> map;
 
-  private ImmutableTypedObjectMap(ImmutableMap<TypedObjectKey<?>, Object> map) {
-    this.map = map;
+  private ImmutableTypedObjectMap(Map<TypedObjectKey<?>, Object> map) {
+    this.map = Map.copyOf(map);
   }
 
   public static Builder builder() {
@@ -17,8 +21,7 @@ public class ImmutableTypedObjectMap implements TypedObjectMap {
   }
 
   public static class Builder {
-    private final ImmutableMap.Builder<TypedObjectKey<?>, Object> innerBuilder =
-        ImmutableMap.builder();
+    private final Map<TypedObjectKey<?>, Object> innerBuilder = new LinkedHashMap<>();
 
     public <T> Builder put(TypedObjectKey<T> key, T value) {
       innerBuilder.put(key, value);
@@ -30,7 +33,7 @@ public class ImmutableTypedObjectMap implements TypedObjectMap {
     }
 
     public ImmutableTypedObjectMap build() {
-      return new ImmutableTypedObjectMap(innerBuilder.build());
+      return new ImmutableTypedObjectMap(innerBuilder);
     }
   }
 

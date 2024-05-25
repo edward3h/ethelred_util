@@ -1,7 +1,6 @@
-import org.ethelred.util.function.CheckedConsumer
-import org.ethelred.util.function.CheckedFunction
-import org.ethelred.util.function.CheckedSupplier
-import org.ethelred.util.function.WrappedCheckedException
+package org.ethelred.util.function
+
+
 import spock.lang.Specification
 
 import java.util.stream.Collectors

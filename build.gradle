@@ -1,13 +1,9 @@
 plugins {
     id 'java-library'
-//    id 'com.github.sherter.google-java-format' version '0.9'
-    id 'groovy'
-    id 'maven-publish'
-    id 'signing'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
-group = 'org.ethelred'
+group = 'org.ethelred.util'
 version = '2.0'
 
 repositories {
@@ -27,64 +23,12 @@ dependencies {
 
 }
 
-test {
-    useJUnitPlatform()
-}
-
-javadoc {
-	if(JavaVersion.current().isJava9Compatible()) {
-		options.addBooleanOption('html5', true)
-	}
-}
-
 task installGitHooks(type:Exec) {
     onlyIf { !project.hasProperty("skiphooks")}
     commandLine "hooks/setup.sh"
 }
 compileJava.dependsOn installGitHooks
 
-java {
-	withJavadocJar()
-	withSourcesJar()
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-
-            pom {
-				name = 'Ethelred Util'
-				description = 'Utility classes'
-				url = 'https://github.com/edward3h/ethelred_util'
-				licenses {
-					license {
-						name = 'GNU General Public License, Version 3'
-						url = 'https://choosealicense.com/licenses/gpl-3.0/'
-					}
-				}
-				developers {
-					developer {
-						name = 'Edward Harman'
-						email = 'jaq@ethelred.org'
-					}
-				}
-				scm {
-					connection = "https://github.com/edward3h/ethelred_util.git"
-					developerConnection = "git@github.com:edward3h/ethelred_util.git"
-					url = "https://github.com/edward3h/ethelred_util"
-				}
-			}
-        }
-    }
-}
-
-signing {
-	def signingKey = findProperty("signingKey")
-	def signingPassword = findProperty("signingPassword")
-	useInMemoryPgpKeys(signingKey, signingPassword)
-	sign publishing.publications.maven
-}
 
 nexusPublishing {
     repositories {

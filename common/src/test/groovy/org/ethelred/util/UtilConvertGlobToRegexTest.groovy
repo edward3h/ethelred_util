@@ -1,3 +1,5 @@
+package org.ethelred.util
+
 import org.ethelred.util.Util
 import spock.lang.Specification
 

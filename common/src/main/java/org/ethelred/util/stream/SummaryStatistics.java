@@ -1,14 +1,19 @@
 package org.ethelred.util.stream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Comparator;
 import java.util.stream.Collector;
-import javax.annotation.CheckForNull;
 
 /** Stream / Collector for generic stats */
+@NullMarked
 public class SummaryStatistics<T> {
   private final Comparator<T> comparator;
   private int count;
+  @Nullable
   private T min;
+  @Nullable
   private T max;
 
   private SummaryStatistics(Comparator<T> comparator) {
@@ -52,12 +57,12 @@ public class SummaryStatistics<T> {
     return this;
   }
 
-  @CheckForNull
+  @Nullable
   public T getMin() {
     return min;
   }
 
-  @CheckForNull
+  @Nullable
   public T getMax() {
     return max;
   }
