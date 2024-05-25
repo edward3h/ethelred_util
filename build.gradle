@@ -1,40 +1,34 @@
 plugins {
     id 'java-library'
-    id 'com.github.sherter.google-java-format' version '0.9'
+//    id 'com.github.sherter.google-java-format' version '0.9'
     id 'groovy'
-    id 'org.unbroken-dome.test-sets' version '4.0.0'
     id 'maven-publish'
     id 'signing'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-
 }
 
 group = 'org.ethelred'
-version = '1.0.1'
+version = '2.0'
 
 repositories {
     mavenCentral()
 }
 
-testSets {
-    ngTest
-    spockTest
-}
-
 dependencies {
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.21'
-
-    // Use TestNG framework, also requires calling test.useTestNG() below
-    ngTestImplementation 'org.testng:testng:7.5'
-
+	// mandatory dependencies for using Spock
+	implementation platform('org.apache.groovy:groovy-bom:4.0.20')
+	implementation 'org.apache.groovy:groovy'
+	testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
+	testImplementation "org.spockframework:spock-core"
+	testImplementation('org.apache.groovy:groovy-nio')
     // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
 
-    ngTestImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
+}
 
-    spockTestImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
+test {
+    useJUnitPlatform()
 }
 
 javadoc {
@@ -42,18 +36,6 @@ javadoc {
 		options.addBooleanOption('html5', true)
 	}
 }
-
-ngTest {
-    // Use TestNG for unit tests
-    useTestNG()
-}
-
-spockTest {
-    useJUnitPlatform()
-}
-
-check.dependsOn(ngTest)
-check.dependsOn(spockTest)
 
 task installGitHooks(type:Exec) {
     onlyIf { !project.hasProperty("skiphooks")}
