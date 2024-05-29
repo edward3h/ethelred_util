@@ -1,34 +1,12 @@
 plugins {
     id 'java-library'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id "com.github.jakemarsden.git-hooks" version "0.0.2"
+
 }
 
 group = 'org.ethelred.util'
 version = '2.0'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'com.google.guava:guava:31.0.1-jre'
-	// mandatory dependencies for using Spock
-	implementation platform('org.apache.groovy:groovy-bom:4.0.20')
-	implementation 'org.apache.groovy:groovy'
-	testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
-	testImplementation "org.spockframework:spock-core"
-	testImplementation('org.apache.groovy:groovy-nio')
-    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
-
-}
-
-task installGitHooks(type:Exec) {
-    onlyIf { !project.hasProperty("skiphooks")}
-    commandLine "hooks/setup.sh"
-}
-compileJava.dependsOn installGitHooks
-
 
 nexusPublishing {
     repositories {
@@ -37,4 +15,8 @@ nexusPublishing {
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
+}
+
+gitHooks {
+    hooks = ['pre-commit': 'build']
 }

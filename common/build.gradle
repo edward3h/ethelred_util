@@ -2,7 +2,3 @@ plugins {
     id 'java-library-conventions'
     id 'publishing-conventions'
 }
-
-dependencies {
-    implementation("org.jspecify:jspecify:0.3.0")
-}
