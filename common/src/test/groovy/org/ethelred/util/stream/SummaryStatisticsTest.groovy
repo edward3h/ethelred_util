@@ -10,8 +10,8 @@ class SummaryStatisticsTest extends Specification {
 
         then:
         stats.count == 0
-        stats.max == null
-        stats.min == null
+        !stats.max
+        !stats.min
     }
 
     def "single item stream"() {
@@ -20,8 +20,8 @@ class SummaryStatisticsTest extends Specification {
 
         then:
         stats.count == 1
-        stats.max == 'one'
-        stats.min == 'one'
+        stats.max.get() == 'one'
+        stats.min.get() == 'one'
     }
 
     def "a few items stream"() {
@@ -30,8 +30,8 @@ class SummaryStatisticsTest extends Specification {
 
         then:
         stats.count == 3
-        stats.max == 'two'
-        stats.min == 'one'
+        stats.max.get() == 'two'
+        stats.min.get() == 'one'
     }
 
     def "a few items stream with custom comparator"() {
@@ -40,7 +40,7 @@ class SummaryStatisticsTest extends Specification {
 
         then:
         stats.count == 3
-        stats.max == 'three'
-        stats.min == 'one'
+        stats.max.get() == 'three'
+        stats.min.get() == 'one'
     }
 }

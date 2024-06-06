@@ -2,7 +2,13 @@ package org.ethelred.util.function;
 
 import java.util.function.Function;
 
-/** Created by edward on 6/7/16. */
+/**
+ * Checked wrapper for a Function.
+ *
+ * @param <T> The input type for the operation
+ * @param <R> The return type for the operation
+ * @param <E> A checked exception type that is thrown by the operation
+ * */
 public interface CheckedFunction<T, R, E extends Throwable> {
   R apply(T t) throws E;
 

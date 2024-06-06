@@ -2,7 +2,12 @@ package org.ethelred.util.function;
 
 import java.util.function.Consumer;
 
-/** Created by edward on 6/7/16. */
+/**
+ * Checked wrapper for a Consumer.
+ *
+ * @param <T> The consumed type
+ * @param <E> A checked exception type that is thrown by the operation
+ */
 public interface CheckedConsumer<T, E extends Throwable> {
   void accept(T t) throws E;
 

@@ -1,5 +1,8 @@
 package org.ethelred.util.function;
 
+/**
+ * The exception thrown from the 'Checked' wrappers in this package.
+ */
 public class WrappedCheckedException extends RuntimeException {
 
   /** */
