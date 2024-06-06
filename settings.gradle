@@ -1,1 +1,6 @@
+pluginManagement {
+	includeBuild('build-logic')
+}
+
 rootProject.name = 'ethelred_util'
+include 'common', 'console', 'groovy', 'picocli', 'picocli-examples'

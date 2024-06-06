@@ -1,0 +1,9 @@
+plugins {
+    id 'test-conventions'
+    id 'java-library'
+}
+
+dependencies {
+    // https://jspecify.dev/
+    implementation("org.jspecify:jspecify:0.3.0")
+}

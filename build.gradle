@@ -1,114 +1,58 @@
 plugins {
-    id 'java-library'
-    id 'com.github.sherter.google-java-format' version '0.9'
-    id 'groovy'
-    id 'org.unbroken-dome.test-sets' version '4.0.0'
-    id 'maven-publish'
-    id 'signing'
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-
+	id 'java-library'
+	id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+	id "com.github.jakemarsden.git-hooks" version "0.0.2"
+	id("com.diffplug.spotless") version "6.25.0"
 }
 
-group = 'org.ethelred'
-version = '1.0.1'
+group = 'org.ethelred.util'
+version = '2.0'
 
-repositories {
-    mavenCentral()
-}
-
-testSets {
-    ngTest
-    spockTest
-}
-
-dependencies {
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.21'
-
-    // Use TestNG framework, also requires calling test.useTestNG() below
-    ngTestImplementation 'org.testng:testng:7.5'
-
-    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
-
-    ngTestImplementation group: 'com.github.npathai', name: 'hamcrest-optional', version: '2.0.0'
-
-    spockTestImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
-}
-
-javadoc {
-	if(JavaVersion.current().isJava9Compatible()) {
-		options.addBooleanOption('html5', true)
+nexusPublishing {
+	repositories {
+		sonatype {
+			//only for users registered in Sonatype after 24 Feb 2021
+			nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+		}
 	}
 }
 
-ngTest {
-    // Use TestNG for unit tests
-    useTestNG()
+repositories {
+	mavenCentral()
 }
 
-spockTest {
-    useJUnitPlatform()
+gitHooks {
+	hooks = ['pre-commit': 'build']
 }
 
-check.dependsOn(ngTest)
-check.dependsOn(spockTest)
+spotless {
+	java {
+		target '**/src/**/*.java'
+		palantirJavaFormat()
+		formatAnnotations()
+		importOrder()
+		licenseHeader('/* (C) $YEAR */')
+	}
 
-task installGitHooks(type:Exec) {
-    onlyIf { !project.hasProperty("skiphooks")}
-    commandLine "hooks/setup.sh"
-}
-compileJava.dependsOn installGitHooks
+	format 'misc', {
+		target '.gitattributes', '.gitignore'
 
-java {
-	withJavadocJar()
-	withSourcesJar()
-}
+		trimTrailingWhitespace()
+		indentWithSpaces()
+		endWithNewline()
+	}
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
+	// spotless doesn't seem to allow the newer version of eclipse groovy format
+	//    groovy {
+	//        target '**/*.groovy'
+	//        importOrder()
+	//        greclipse('5.3')
+	//        licenseHeader('/* (C) $YEAR */')
+	//    }
 
-            pom {
-				name = 'Ethelred Util'
-				description = 'Utility classes'
-				url = 'https://github.com/edward3h/ethelred_util'
-				licenses {
-					license {
-						name = 'GNU General Public License, Version 3'
-						url = 'https://choosealicense.com/licenses/gpl-3.0/'
-					}
-				}
-				developers {
-					developer {
-						name = 'Edward Harman'
-						email = 'jaq@ethelred.org'
-					}
-				}
-				scm {
-					connection = "https://github.com/edward3h/ethelred_util.git"
-					developerConnection = "git@github.com:edward3h/ethelred_util.git"
-					url = "https://github.com/edward3h/ethelred_util"
-				}
-			}
-        }
-    }
-}
-
-signing {
-	def signingKey = findProperty("signingKey")
-	def signingPassword = findProperty("signingPassword")
-	useInMemoryPgpKeys(signingKey, signingPassword)
-	sign publishing.publications.maven
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {  //only for users registered in Sonatype after 24 Feb 2021
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
-    }
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+	}
 }

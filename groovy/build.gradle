@@ -1,0 +1,9 @@
+plugins {
+    id('test-conventions')
+    id('publishing-conventions')
+}
+
+dependencies {
+    implementation platform('org.apache.groovy:groovy-bom:4.0.20')
+    implementation 'org.apache.groovy:groovy'
+}
