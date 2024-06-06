@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation platform('org.apache.groovy:groovy-bom:4.0.20')
+    implementation platform('org.apache.groovy:groovy-bom:4.0.21')
     implementation 'org.apache.groovy:groovy'
 }
