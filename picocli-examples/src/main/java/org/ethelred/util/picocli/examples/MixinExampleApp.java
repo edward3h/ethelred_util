@@ -1,3 +1,4 @@
+/* (C) 2024 */
 package org.ethelred.util.picocli.examples;
 
 import org.ethelred.util.picocli.defaults.EnvironmentAndConfigMixin;

@@ -1,3 +1,4 @@
+/* (C) 2024 */
 package org.ethelred.util.picocli.defaults;
 
 public class EnvironmentAndConfigDefaultValueProvider extends CascadingDefaultValueProvider {

@@ -1,3 +1,4 @@
+/* (C) 2024 */
 package org.ethelred.util.picocli.defaults.config;
 
 import picocli.CommandLine;

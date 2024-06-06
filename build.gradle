@@ -1,22 +1,58 @@
 plugins {
-    id 'java-library'
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id "com.github.jakemarsden.git-hooks" version "0.0.2"
-
+	id 'java-library'
+	id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+	id "com.github.jakemarsden.git-hooks" version "0.0.2"
+	id("com.diffplug.spotless") version "6.25.0"
 }
 
 group = 'org.ethelred.util'
 version = '2.0'
 
 nexusPublishing {
-    repositories {
-        sonatype {  //only for users registered in Sonatype after 24 Feb 2021
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
-    }
+	repositories {
+		sonatype {
+			//only for users registered in Sonatype after 24 Feb 2021
+			nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
 }
 
 gitHooks {
-    hooks = ['pre-commit': 'build']
+	hooks = ['pre-commit': 'build']
+}
+
+spotless {
+	java {
+		target '**/src/**/*.java'
+		palantirJavaFormat()
+		formatAnnotations()
+		importOrder()
+		licenseHeader('/* (C) $YEAR */')
+	}
+
+	format 'misc', {
+		target '.gitattributes', '.gitignore'
+
+		trimTrailingWhitespace()
+		indentWithSpaces()
+		endWithNewline()
+	}
+
+	// spotless doesn't seem to allow the newer version of eclipse groovy format
+	//    groovy {
+	//        target '**/*.groovy'
+	//        importOrder()
+	//        greclipse('5.3')
+	//        licenseHeader('/* (C) $YEAR */')
+	//    }
+
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+	}
 }
