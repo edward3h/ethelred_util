@@ -8,5 +8,5 @@ dependencies {
     implementation 'com.electronwill.night-config:core:3.6.6'
     implementation 'com.electronwill.night-config:toml:3.6.6'
 
-    api 'info.picocli:picocli:4.7.0'
+    api 'info.picocli:picocli:4.7.6'
 }
