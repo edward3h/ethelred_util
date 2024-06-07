@@ -11,10 +11,14 @@ General purpose pure Java classes.
 
 `org.ethelred.util:common:2.0`
 
+[![javadoc](https://javadoc.io/badge2/org.ethelred.util/common/javadoc.svg)](https://javadoc.io/doc/org.ethelred.util/common)
+
 ### Console
 Terminal/console utilities. Has native dependencies _that have only been tested on Linux._
 
 `org.ethelred.util:console:2.0`
+
+[![javadoc](https://javadoc.io/badge2/org.ethelred.util/console/javadoc.svg)](https://javadoc.io/doc/org.ethelred.util/console)
 
 ### Groovy
 Write data in a tabular format in your Groovy code.
