@@ -17,16 +17,16 @@ public class ConfigDefaultValueProvider implements CommandLine.IDefaultValueProv
         var commandSpec = argSpec.command();
         var view = new SpecCommandView(commandSpec);
         var config = configHelper.getConfig(view);
-        return findValue(config, commandSpec, argSpec);
+        var propertyKey = PropertyKey.from(argSpec);
+        return propertyKey == null ? null : findValue(config, propertyKey, argSpec);
     }
 
-    private String findValue(Config config, CommandLine.Model.CommandSpec spec, CommandLine.Model.ArgSpec argSpec) {
-        var argKey = argSpec.descriptionKey();
-        if (argKey == null && argSpec instanceof CommandLine.Model.OptionSpec) {
-            argKey = ((CommandLine.Model.OptionSpec) argSpec).longestName().replaceAll("^-+", "");
-        }
-        var commandKey = spec.qualifiedName(".");
-        var value = config.get(commandKey + "." + argKey);
+    private String findValue(Config config, PropertyKey key, CommandLine.Model.ArgSpec argSpec) {
+        var value = key.configKeys().stream()
+                .map(config::get)
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
         if (value instanceof Collection) {
             value = handleCollection((Collection<?>) value, argSpec);
         }
