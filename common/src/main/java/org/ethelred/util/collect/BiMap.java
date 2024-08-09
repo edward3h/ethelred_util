@@ -2,11 +2,14 @@
 package org.ethelred.util.collect;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -52,10 +55,20 @@ public class BiMap<A, B> {
         return first.size();
     }
 
+    /**
+     * Get the B value corresponding to the A key.
+     * @param key A key
+     * @return Optional containing value, empty if not found
+     */
     public Optional<B> getByA(A key) {
         return Optional.ofNullable(first.get(key));
     }
 
+    /**
+     * Get the A value corresponding to the B key.
+     * @param key B key
+     * @return Optional containing value, empty if not found
+     */
     public Optional<A> getByB(B key) {
         return Optional.ofNullable(second.get(key));
     }
@@ -98,6 +111,48 @@ public class BiMap<A, B> {
     @SafeVarargs
     public static <A, B> BiMap<A, B> ofEntries(Entry<A, B>... entries) {
         return new BiMap<>(List.of(entries), entries.length);
+    }
+
+    /**
+     *
+     * @return An unmodifiable view of the mapping from A keys
+     */
+    public Map<A, B> mapByA() {
+        return Collections.unmodifiableMap(first);
+    }
+
+    /**
+     *
+     * @return An unmodifiable view of the mapping from B keys
+     */
+    public Map<B, A> mapByB() {
+        return Collections.unmodifiableMap(second);
+    }
+
+    /**
+     *
+     * @return An unmodifiable view of the set of A keys
+     */
+    public Set<A> keysA() {
+        return Collections.unmodifiableSet(first.keySet());
+    }
+
+    /**
+     *
+     * @return An unmodifiable view of the set of B keys
+     */
+    public Set<B> keysB() {
+        return Collections.unmodifiableSet(second.keySet());
+    }
+
+    /**
+     *
+     * @return Collect a stream of Entry into a BiMap
+     * @param <A> Type of one of the keys/values
+     * @param <B> Type of the other keys/values
+     */
+    public static <A, B> Collector<Entry<A, B>, ?, BiMap<A, B>> toBiMap() {
+        return Collectors.collectingAndThen(Collectors.toList(), BiMap::ofEntries);
     }
 
     public static class Entry<A, B> {
