@@ -9,5 +9,5 @@ dependencies {
     implementation 'com.electronwill.night-config:core:3.7.2'
     implementation 'com.electronwill.night-config:toml:3.7.2'
 
-    api 'info.picocli:picocli:4.7.6'
+    api 'info.picocli:picocli:4.7.7'
 }
