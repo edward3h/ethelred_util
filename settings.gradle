@@ -2,5 +2,8 @@ pluginManagement {
 	includeBuild('build-logic')
 }
 
+plugins {
+	id('io.freefair.settings.plugin-versions').version("8.13.1")
+}
 rootProject.name = 'ethelred_util'
 include 'common', 'console', 'groovy', 'picocli', 'picocli-examples'
