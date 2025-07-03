@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id 'maven-publish'
-    id 'signing'
     id 'io.freefair.javadocs'
+    id ("org.danilopianini.publish-on-central")
+
 }
 
 group = rootProject.group
@@ -19,31 +19,25 @@ java {
     withSourcesJar()
 }
 
+publishOnCentral {
+    repoOwner = "edward3h"
+    projectDescription = "Utility classes"
+    projectLongName = 'Ethelred Util'
+    licenseName = 'GNU General Public License, Version 3'
+    licenseUrl = 'https://choosealicense.com/licenses/gpl-3.0/'
+    projectUrl = "https://github.com/edward3h/ethelred_util"
+    scmConnection = "https://github.com/edward3h/ethelred_util.git"
+}
+
 publishing {
     publications {
-        maven(MavenPublication) {
-            from(components.java)
-
+        withType(MavenPublication) {
             pom {
-                name = 'Ethelred Util'
-                description = 'Utility classes'
-                url = 'https://github.com/edward3h/ethelred_util'
-                licenses {
-                    license {
-                        name = 'GNU General Public License, Version 3'
-                        url = 'https://choosealicense.com/licenses/gpl-3.0/'
-                    }
-                }
                 developers {
                     developer {
                         name = 'Edward Harman'
                         email = 'jaq@ethelred.org'
                     }
-                }
-                scm {
-                    connection = "https://github.com/edward3h/ethelred_util.git"
-                    developerConnection = "git@github.com:edward3h/ethelred_util.git"
-                    url = "https://github.com/edward3h/ethelred_util"
                 }
             }
         }
@@ -54,5 +48,4 @@ signing {
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.maven
 }
