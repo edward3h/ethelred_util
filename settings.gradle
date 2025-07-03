@@ -1,7 +1,3 @@
-pluginManagement {
-	includeBuild('build-logic')
-}
-
 plugins {
 	id('io.freefair.settings.plugin-versions').version("8.13.1")
 }

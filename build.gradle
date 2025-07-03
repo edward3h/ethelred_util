@@ -1,3 +1,5 @@
+import org.ethelred.util.task.MarkdownTask
+
 plugins {
 	id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 	id "com.github.jakemarsden.git-hooks" version "0.0.2"
@@ -61,5 +63,16 @@ spotless {
 	groovyGradle {
 		target '*.gradle'
 		greclipse()
+	}
+}
+
+var markdown = tasks.register("markdown", MarkdownTask) {
+	from = file("docs")
+}
+
+tasks.named("javadoc", Javadoc) { t ->
+	t.inputs.dir(markdown.map {it.into})
+	t.options {
+		overview = markdown.get().into.file("docs/overview.html").get().getAsFile().toString()
 	}
 }
