@@ -48,7 +48,9 @@ public abstract class MarkdownTask extends DefaultTask {
                         .resolve(sourcePath.getFileName().toString().replace(".md", ".html"));
                 Node document = parser.parseReader(Files.newBufferedReader(sourcePath, StandardCharsets.UTF_8));
                 try (var writer = Files.newBufferedWriter(targetPath, StandardCharsets.UTF_8)) {
-                    renderer.render(document, writer);
+                    var output = renderer.render(document);
+                    output = output.replace(" />", ">"); // hack to avoid self-closing tag
+                    writer.write(output);
                 }
             } else {
                 Files.copy(sourcePath, targetPath);
