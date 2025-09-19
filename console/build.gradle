@@ -1,8 +1,0 @@
-plugins {
-    id 'java-library-conventions'
-    id 'publishing-conventions'
-}
-
-dependencies {
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.17.0'
-}

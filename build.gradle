@@ -19,8 +19,6 @@ gitHooks {
 
 dependencies {
 	javadoc(project(":common"))
-	javadoc(project(":console"))
-	javadoc(project(":groovy"))
 	javadoc(project(":picocli"))
 }
 
@@ -40,14 +38,6 @@ spotless {
 		leadingTabsToSpaces()
 		endWithNewline()
 	}
-
-	// spotless doesn't seem to allow the newer version of eclipse groovy format
-	//    groovy {
-	//        target '**/*.groovy'
-	//        importOrder()
-	//        greclipse('5.3')
-	//        licenseHeader('/* (C) $YEAR */')
-	//    }
 
 	groovyGradle {
 		target '*.gradle'
