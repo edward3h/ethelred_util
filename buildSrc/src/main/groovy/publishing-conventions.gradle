@@ -1,6 +1,6 @@
 plugins {
-    id 'java'
-    id 'io.freefair.javadocs'
+    id "java"
+    id "io.freefair.javadocs"
     id ("org.danilopianini.publish-on-central")
 
 }
@@ -10,7 +10,7 @@ version = rootProject.version
 
 javadoc {
     if(JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption('html5', true)
+        options.addBooleanOption("html5", true)
     }
 }
 
@@ -22,9 +22,9 @@ java {
 publishOnCentral {
     repoOwner = "edward3h"
     projectDescription = "Utility classes"
-    projectLongName = 'Ethelred Util'
-    licenseName = 'GNU General Public License, Version 3'
-    licenseUrl = 'https://choosealicense.com/licenses/gpl-3.0/'
+    projectLongName = "Ethelred Util"
+    licenseName = "GNU General Public License, Version 3"
+    licenseUrl = "https://choosealicense.com/licenses/gpl-3.0/"
     projectUrl = "https://github.com/edward3h/ethelred_util"
     scmConnection = "https://github.com/edward3h/ethelred_util.git"
 }
@@ -35,8 +35,8 @@ publishing {
             pom {
                 developers {
                     developer {
-                        name = 'Edward Harman'
-                        email = 'jaq@ethelred.org'
+                        name = "Edward Harman"
+                        email = "jaq@ethelred.org"
                     }
                 }
             }

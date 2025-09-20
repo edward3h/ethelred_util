@@ -1,5 +1,5 @@
 plugins {
-    id('groovy-gradle-plugin')
+    id("groovy-gradle-plugin")
     id("java")
 }
 
@@ -9,6 +9,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
+    implementation "com.vladsch.flexmark:flexmark-all:0.64.8"
     implementation("org.danilopianini:publish-on-central:9.1.5")
 }

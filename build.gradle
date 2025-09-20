@@ -6,15 +6,15 @@ plugins {
 	id("io.freefair.aggregate-javadoc")
 }
 
-group = 'org.ethelred.util'
-version = '2.4-rc0'
+group = "org.ethelred.util"
+version = "2.4-rc0"
 
 repositories {
 	mavenCentral()
 }
 
 gitHooks {
-	hooks = ['pre-commit': 'build']
+	hooks = ["pre-commit": "build"]
 }
 
 dependencies {
@@ -24,15 +24,15 @@ dependencies {
 
 spotless {
 	java {
-		target '**/src/**/*.java'
+		target "**/src/**/*.java"
 		palantirJavaFormat()
 		formatAnnotations()
 		importOrder()
-		licenseHeader('/* (C) $YEAR */')
+		licenseHeader("/* (C) \$YEAR */")
 	}
 
-	format 'misc', {
-		target '.gitattributes', '.gitignore'
+	format "misc", {
+		target ".gitattributes", ".gitignore"
 
 		trimTrailingWhitespace()
 		leadingTabsToSpaces()
@@ -40,7 +40,7 @@ spotless {
 	}
 
 	groovyGradle {
-		target '*.gradle'
+		target "*.gradle"
 		greclipse()
 	}
 }
