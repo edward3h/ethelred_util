@@ -1,6 +1,6 @@
 plugins {
-    id "test-conventions"
-    id "java-library"
+    id("test-conventions")
+    `java-library`
 }
 
 dependencies {

@@ -1,16 +1,16 @@
 plugins {
-    id "java"
-    id "io.freefair.javadocs"
-    id ("org.danilopianini.publish-on-central")
+    java
+    id("io.freefair.javadocs")
+    id("org.danilopianini.publish-on-central")
 
 }
 
 group = rootProject.group
 version = rootProject.version
 
-javadoc {
+tasks.javadoc {
     if(JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption("html5", true)
+        (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
 }
 
@@ -31,7 +31,7 @@ publishOnCentral {
 
 publishing {
     publications {
-        withType(MavenPublication) {
+        withType<MavenPublication> {
             pom {
                 developers {
                     developer {
@@ -45,7 +45,7 @@ publishing {
 }
 
 signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
+    val signingKey = findProperty("signingKey") as String?
+    val signingPassword = findProperty("signingPassword") as String?
     useInMemoryPgpKeys(signingKey, signingPassword)
 }
