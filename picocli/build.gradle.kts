@@ -5,9 +5,6 @@ plugins {
 
 dependencies {
     implementation(project(":common"))
-    implementation("dev.dirs:directories:26")
-    implementation("com.electronwill.night-config:toml:3.8.3")
-    implementation("com.electronwill.night-config:core:3.8.3")
 
     api("info.picocli:picocli:4.7.7")
 }

@@ -1,12 +1,6 @@
 /* (C) 2024 */
 package org.ethelred.util.picocli.defaults;
 
-import static org.ethelred.util.collect.Sequences.concat;
-import static org.ethelred.util.collect.Sequences.prefixes;
-import static org.ethelred.util.collect.Sequences.tail;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -31,20 +25,6 @@ public class PropertyKey {
                 .flatMap(List::stream)
                 .map(String::toUpperCase)
                 .collect(Collectors.joining("_"));
-    }
-
-    public List<List<String>> configKeys() {
-        List<List<String>> result = new ArrayList<>(commands.size() + 2);
-        if (commands.size() > 1) {
-            var prefixes = new ArrayList<>(prefixes(tail(commands, -1)));
-            Collections.reverse(prefixes);
-            for (var prefix : prefixes) {
-                result.add(concat(prefix, propertySegments));
-            }
-        }
-        result.add(propertySegments);
-        result.add(originalOption);
-        return result;
     }
 
     public static @Nullable PropertyKey from(CommandLine.Model.ArgSpec argSpec) {
@@ -79,9 +59,5 @@ public class PropertyKey {
     @Override
     public int hashCode() {
         return Objects.hash(commands, propertySegments);
-    }
-
-    List<String> propertySegments() {
-        return propertySegments;
     }
 }
