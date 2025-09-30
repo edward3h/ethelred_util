@@ -12,12 +12,10 @@ import picocli.CommandLine;
 public class PropertyKey {
     private final List<String> commands;
     private final List<String> propertySegments;
-    private final List<String> originalOption;
 
-    private PropertyKey(List<String> commands, List<String> propertySegments, List<String> originalOption) {
+    private PropertyKey(List<String> commands, List<String> propertySegments) {
         this.commands = commands;
         this.propertySegments = propertySegments;
-        this.originalOption = originalOption;
     }
 
     public String asEnvironmentVariable() {
@@ -29,17 +27,15 @@ public class PropertyKey {
 
     public static @Nullable PropertyKey from(CommandLine.Model.ArgSpec argSpec) {
         var argKey = argSpec.descriptionKey();
-        var original = List.<String>of();
         if ((argKey == null || argKey.isBlank()) && argSpec instanceof CommandLine.Model.OptionSpec) {
             argKey = ((CommandLine.Model.OptionSpec) argSpec).longestName();
-            original = List.of(argKey.replaceFirst("^\\W+", ""));
         }
         if (argKey == null || argKey.isBlank()) {
             return null;
         }
         var propertySegments = splitNonWord(argKey);
         var commands = argSpec.command().qualifiedName().split("\\s+");
-        return new PropertyKey(List.of(commands), propertySegments, original);
+        return new PropertyKey(List.of(commands), propertySegments);
     }
 
     private static List<String> splitNonWord(String argKey) {
@@ -59,5 +55,10 @@ public class PropertyKey {
     @Override
     public int hashCode() {
         return Objects.hash(commands, propertySegments);
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyKey{" + "commands=" + commands + ", propertySegments=" + propertySegments + '}';
     }
 }
