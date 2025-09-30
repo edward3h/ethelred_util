@@ -10,20 +10,20 @@ import java.util.function.Function;
  * @param <R> The return type for the operation
  * @param <E> A checked exception type that is thrown by the operation
  * */
-public interface CheckedFunction<T, R, E extends Throwable> {
+public interface CheckedFunction<T, R, E extends Exception> {
     R apply(T t) throws E;
 
     default Function<T, R> asUnchecked() {
         return t -> {
             try {
                 return apply(t);
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 throw new WrappedCheckedException(e);
             }
         };
     }
 
-    static <TT, RR, EE extends Throwable> Function<TT, RR> unchecked(CheckedFunction<TT, RR, EE> checkedFunction) {
+    static <TT, RR, EE extends Exception> Function<TT, RR> unchecked(CheckedFunction<TT, RR, EE> checkedFunction) {
         return checkedFunction.asUnchecked();
     }
 }

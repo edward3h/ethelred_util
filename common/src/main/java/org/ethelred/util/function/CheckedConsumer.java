@@ -9,20 +9,20 @@ import java.util.function.Consumer;
  * @param <T> The consumed type
  * @param <E> A checked exception type that is thrown by the operation
  */
-public interface CheckedConsumer<T, E extends Throwable> {
+public interface CheckedConsumer<T, E extends Exception> {
     void accept(T t) throws E;
 
     default Consumer<T> asUnchecked() {
         return t -> {
             try {
                 accept(t);
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 throw new WrappedCheckedException(e);
             }
         };
     }
 
-    static <TT, EE extends Throwable> Consumer<TT> unchecked(CheckedConsumer<TT, EE> checkedConsumer) {
+    static <TT, EE extends Exception> Consumer<TT> unchecked(CheckedConsumer<TT, EE> checkedConsumer) {
         return checkedConsumer.asUnchecked();
     }
 }
