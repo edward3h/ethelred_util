@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.18.0'
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.18.1'
 }
