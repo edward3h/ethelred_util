@@ -156,8 +156,4 @@ class Util {
         }
         return sb.toString();
     }
-
-    public static boolean isBlank(String s) {
-        return s == null || s.isBlank();
-    }
 }
