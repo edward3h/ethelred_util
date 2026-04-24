@@ -9,7 +9,7 @@ public class WrappedCheckedException extends RuntimeException {
     /** */
     private static final long serialVersionUID = 7075961307847517795L;
 
-    public WrappedCheckedException(Throwable cause) {
+    public WrappedCheckedException(Exception cause) {
         super(cause);
     }
 }

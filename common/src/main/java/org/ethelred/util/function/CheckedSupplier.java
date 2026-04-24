@@ -10,20 +10,20 @@ import java.util.function.Supplier;
  * @param <E> A checked exception type that is thrown by the operation
  */
 @FunctionalInterface
-public interface CheckedSupplier<T, E extends Throwable> {
+public interface CheckedSupplier<T, E extends Exception> {
     T get() throws E;
 
     default Supplier<T> asUnchecked() {
         return () -> {
             try {
                 return get();
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 throw new WrappedCheckedException(e);
             }
         };
     }
 
-    static <TT, EE extends Throwable> Supplier<TT> unchecked(CheckedSupplier<TT, EE> supplier) {
+    static <TT, EE extends Exception> Supplier<TT> unchecked(CheckedSupplier<TT, EE> supplier) {
         return supplier.asUnchecked();
     }
 }

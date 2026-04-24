@@ -6,20 +6,20 @@ package org.ethelred.util.function;
  * @param <E> A checked exception type that is thrown by the operation
  */
 @FunctionalInterface
-public interface CheckedRunnable<E extends Throwable> {
+public interface CheckedRunnable<E extends Exception> {
     void run() throws E;
 
     default Runnable asUnchecked() {
         return () -> {
             try {
                 run();
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 throw new WrappedCheckedException(e);
             }
         };
     }
 
-    static <EE extends Throwable> Runnable unchecked(CheckedRunnable<EE> runnable) {
+    static <EE extends Exception> Runnable unchecked(CheckedRunnable<EE> runnable) {
         return runnable.asUnchecked();
     }
 }

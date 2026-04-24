@@ -4,6 +4,7 @@ import spock.lang.Specification
 import spock.lang.TempDir
 import spock.util.io.FileSystemFixture
 
+import java.nio.file.Files
 import java.nio.file.Path
 
 class UtilTest extends Specification {
@@ -48,6 +49,32 @@ class UtilTest extends Specification {
 
         then:
         Util.size(fs.resolve('testDir')) == 579
+    }
+
+    def "deleteRecursive removes a single file"() {
+        given:
+        def path = fs.resolve("target.txt")
+        Files.createFile(path)
+
+        when:
+        Util.deleteRecursive(path)
+
+        then:
+        !Files.exists(path)
+    }
+
+    def "deleteRecursive removes a directory and all nested contents"() {
+        given:
+        def path = fs.resolve("target")
+        Files.createDirectories(path.resolve("sub"))
+        Files.createFile(path.resolve("a.txt"))
+        Files.createFile(path.resolve("sub/b.txt"))
+
+        when:
+        Util.deleteRecursive(path)
+
+        then:
+        !Files.exists(path)
     }
 
     private static final String LETTERS = "QWERTYUIOP"
