@@ -7,6 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.AnnotatedElement;
+import org.jspecify.annotations.Nullable;
 import picocli.CommandLine.IDefaultValueProvider;
 import picocli.CommandLine.Model.ArgSpec;
 
@@ -24,7 +25,7 @@ public class EnvironmentDefaultValueProvider implements IDefaultValueProvider {
     }
 
     @Override
-    public String defaultValue(ArgSpec argSpec) {
+    public @Nullable String defaultValue(ArgSpec argSpec) {
         var obj = argSpec.userObject();
         if (obj instanceof AnnotatedElement) {
             var env = ((AnnotatedElement) obj).getAnnotation(Env.class);
