@@ -24,4 +24,8 @@ Integrate environment variables with your Picocli options via `EnvironmentDefaul
 
 Because I can never remember the command.
 
-`./gradlew publishOnCentral`
+```
+./publish.sh
+```
+
+Three steps are required (publish locally → zip → release to Maven Central Portal), so a script is provided.
