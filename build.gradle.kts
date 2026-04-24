@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.ethelred.util"
-version = "2.4-rc0"
+version = "3.0"
 
 repositories {
 	mavenCentral()
