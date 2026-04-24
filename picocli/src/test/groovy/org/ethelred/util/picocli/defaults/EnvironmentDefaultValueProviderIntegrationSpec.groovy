@@ -74,6 +74,33 @@ class EnvironmentDefaultValueProviderIntegrationSpec extends Specification {
         cmd.host == "from-args"
     }
 
+    @Command(name = "myapp", defaultValueProvider = EnvironmentDefaultValueProvider)
+    static class AnnotatedCmd implements Runnable {
+        @Option(names = "--host")
+        String host
+        void run() {}
+    }
+
+    def "Dotenv can be injected via IFactory when provider is declared in annotation"() {
+        given:
+        def dotenv = Stub(Dotenv) {
+            get("MYAPP_HOST") >> "injected"
+            get(_) >> null
+        }
+        def factory = { Class cls ->
+            cls == EnvironmentDefaultValueProvider
+                ? new EnvironmentDefaultValueProvider(dotenv)
+                : CommandLine.defaultFactory().create(cls)
+        } as CommandLine.IFactory
+        def cmd = new AnnotatedCmd()
+
+        when:
+        new CommandLine(cmd, factory).parseArgs()
+
+        then:
+        cmd.host == "injected"
+    }
+
     def "annotation default is preserved when no env var matches"() {
         given:
         def dotenv = Stub(Dotenv) {

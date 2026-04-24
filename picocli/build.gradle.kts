@@ -1,6 +1,6 @@
 plugins {
     id("java-library-conventions")
-//    id "publishing-conventions" TODO not ready to publish, but other modules are
+    id("publishing-conventions")
 }
 
 dependencies {

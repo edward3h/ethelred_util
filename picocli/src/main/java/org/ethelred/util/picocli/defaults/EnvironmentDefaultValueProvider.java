@@ -53,6 +53,8 @@ public class EnvironmentDefaultValueProvider implements IDefaultValueProvider {
     public @interface Env {
         /**
          * Environment variable names that may be used to look up a value.
+         *
+         * @return environment variable names
          */
         String[] value();
     }
