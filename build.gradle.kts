@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.ethelred.util"
-version = "3.0"
+version = "3.1-SNAPSHOT"
 
 repositories {
 	mavenCentral()
@@ -20,6 +20,7 @@ gitHooks {
 dependencies {
 	javadoc(project(":common"))
 	javadoc(project(":picocli"))
+	javadoc(project(":edhl"))
 }
 
 spotless {
