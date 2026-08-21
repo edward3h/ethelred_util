@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     // https://jspecify.dev/
-    implementation("org.jspecify:jspecify:1.0.0")
+    implementation("org.jspecify:jspecify:1.0.1")
 }
 
 java {
