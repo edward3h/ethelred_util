@@ -2,7 +2,7 @@ import org.ethelred.util.task.MarkdownTask
 
 plugins {
 	id("com.github.jakemarsden.git-hooks") version "0.0.2"
-	id("com.diffplug.spotless") version "7.2.1"
+	id("com.diffplug.spotless") version "8.10.2"
 	id("io.freefair.aggregate-javadoc")
 }
 
