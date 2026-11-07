@@ -10,6 +10,6 @@ repositories {
 
 dependencies {
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
-    implementation("org.danilopianini:publish-on-central:9.3.0")
+    implementation("org.danilopianini:publish-on-central:9.3.1")
     implementation("io.freefair.gradle:maven-plugin:9.8.3")
 }
